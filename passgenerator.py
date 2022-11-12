@@ -65,5 +65,4 @@ class PasswordGenerator:
         self.window.clipboard_append(self.password_entry_box.get())
 
 
-if __name__ == ' __main__':
-    PasswordGenerator().window.mainloop()
+

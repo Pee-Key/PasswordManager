@@ -167,12 +167,3 @@ class PasswordManager:
         self.window.clipboard_append(text)
 
 
-if __name__ == '__main__':
-    db, cursor = init_database()
-    cursor.execute("SELECT * FROM master")
-    manager = PasswordManager()
-    if cursor.fetchall():
-        manager.login_user()
-    else:
-        manager.welcome_new_user()
-    manager.window.mainloop()
