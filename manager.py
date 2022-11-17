@@ -1,5 +1,7 @@
 import hashlib
 from tkinter.constants import BOTH, CENTER, END, LEFT, RIGHT, VERTICAL, Y
+
+import vault
 from passgenerator import PasswordGenerator
 from database import init_database
 from tkinter import Button, Canvas, Entry, Frame, Label, Scrollbar, Tk
@@ -114,7 +116,8 @@ class PasswordManager:
         generate_password_btn.grid(row=1, column=2, pady=10)
 
         add_password_btn = Button(
-            second_frame, text="Add New Password", command=partial(vault_methods.add_password, self.password_vault_screen))
+            second_frame, text="Add New Password",
+            command=partial(vault_methods.add_password, self.password_vault_screen))
         add_password_btn.grid(row=1, column=3, pady=10)
 
         lbl = Label(second_frame, text="Platform")
@@ -138,17 +141,21 @@ class PasswordManager:
                 account_label = Label(second_frame, text=(array[i][2]))
                 account_label.grid(column=1, row=i + 3)
 
-                password_label = Label(second_frame, text=(array[i][3]))
+                password = vault_methods.decryption((array[i][5]), (array[i][3]), (array[i][4]))
+
+                password_label = Label(second_frame, text=password)
                 password_label.grid(column=2, row=i + 3)
 
                 copy_btn = Button(second_frame, text="Copy Password",
-                                  command=partial(self.copy_text, array[i][3]))
+                                  command=partial(self.copy_text, password))
                 copy_btn.grid(column=3, row=i + 3, pady=10, padx=10)
                 update_btn = Button(second_frame, text="Update Password",
-                                    command=partial(vault_methods.update_password, array[i][0], self.password_vault_screen))
+                                    command=partial(vault_methods.update_password, array[i][0],
+                                                    self.password_vault_screen))
                 update_btn.grid(column=4, row=i + 3, pady=10, padx=10)
                 remove_btn = Button(second_frame, text="Delete Password",
-                                    command=partial(vault_methods.remove_password, array[i][0], self.password_vault_screen))
+                                    command=partial(vault_methods.remove_password, array[i][0],
+                                                    self.password_vault_screen))
                 remove_btn.grid(column=5, row=i + 3, pady=10, padx=10)
 
                 i += 1
@@ -165,5 +172,3 @@ class PasswordManager:
     def copy_text(self, text):
         self.window.clipboard_clear()
         self.window.clipboard_append(text)
-
-

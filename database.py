@@ -15,6 +15,8 @@ def init_database():
             id INTEGER PRIMARY KEY,
             platform TEXT NOT NULL,
             userid TEXT NOT NULL,
-            password TEXT NOT NULL);
+            password TEXT NOT NULL,
+            tag TEXT NOT NULL,
+            nonce TEXT NOT NULL);
             """)
     return db, cursor
